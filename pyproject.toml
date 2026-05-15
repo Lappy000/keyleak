@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "keyleak"
 version = "1.0.0"
-description = "API key leak validator — detect and verify leaked credentials across 10+ services"
+description = "API key leak validator — detect and verify leaked credentials across 12+ services"
 readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9"

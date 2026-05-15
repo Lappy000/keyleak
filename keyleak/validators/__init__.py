@@ -75,6 +75,8 @@ _VALIDATOR_MODULES = {
     "twilio": "keyleak.validators.twilio_key",
     "telegram": "keyleak.validators.telegram_key",
     "digitalocean": "keyleak.validators.digitalocean_key",
+    "mailgun": "keyleak.validators.mailgun_key",
+    "huggingface": "keyleak.validators.huggingface_key",
 }
 
 

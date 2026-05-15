@@ -3,9 +3,9 @@
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Services](https://img.shields.io/badge/services-10%2B-orange.svg)](#supported-services)
+[![Services](https://img.shields.io/badge/services-12%2B-orange.svg)](#supported-services)
 
-**API key leak validator** — detect and verify leaked credentials across 10+ services from the command line.
+**API key leak validator** — detect and verify leaked credentials across 12+ services from the command line.
 
 `keyleak` takes API keys (from stdin, files, or direct input), automatically identifies the service they belong to, and validates whether they're still active by making safe, read-only API calls.
 
@@ -114,6 +114,8 @@ keyleak services
 | **Twilio** | `SK...` (34 chars) | List accounts | `GET /2010-04-01/Accounts` |
 | **Telegram** | `<digits>:<hash>` | Get bot info | `GET /bot<token>/getMe` |
 | **DigitalOcean** | `dop_v1_...` | Get account | `GET /v2/account` |
+| **Mailgun** | `key-...` | List domains | `GET /v3/domains` |
+| **Hugging Face** | `hf_...` | Who am I | `GET /api/whoami-v2` |
 
 ## 🔧 Adding New Validators
 
@@ -207,7 +209,9 @@ keyleak/
 │       ├── sendgrid_key.py  # SendGrid /v3/user/profile
 │       ├── twilio_key.py    # Twilio /2010-04-01/Accounts
 │       ├── telegram_key.py  # Telegram /getMe
-│       └── digitalocean_key.py # DO /v2/account
+│       ├── digitalocean_key.py # DO /v2/account
+│       ├── mailgun_key.py   # Mailgun /v3/domains
+│       └── huggingface_key.py # HF /api/whoami-v2
 ├── README.md
 ├── pyproject.toml
 ├── requirements.txt

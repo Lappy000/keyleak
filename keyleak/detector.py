@@ -151,6 +151,24 @@ _PATTERNS: List[KeyPattern] = [
         min_length=71,
         max_length=71,
     ),
+    KeyPattern(
+        service="mailgun",
+        pattern=re.compile(r"key-[a-f0-9]{32}"),
+        description="Mailgun Private API Key",
+        validator_module="keyleak.validators.mailgun_key",
+        prefix_hint="key-",
+        min_length=36,
+        max_length=36,
+    ),
+    KeyPattern(
+        service="huggingface",
+        pattern=re.compile(r"hf_[A-Za-z0-9]{20,60}"),
+        description="Hugging Face Access Token",
+        validator_module="keyleak.validators.huggingface_key",
+        prefix_hint="hf_",
+        min_length=23,
+        max_length=63,
+    ),
 ]
 
 
