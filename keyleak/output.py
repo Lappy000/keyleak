@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 import sys
-from typing import List, Optional, TextIO
+from typing import TextIO
 
 from rich.console import Console
 from rich.panel import Panel
@@ -39,8 +39,8 @@ def _mask_key(key: str, visible: int = 8) -> str:
 
 
 def render_table(
-    results: List[ValidationResult],
-    console: Optional[Console] = None,
+    results: list[ValidationResult],
+    console: Console | None = None,
     show_full_keys: bool = False,
 ) -> None:
     """Render validation results as a rich table.
@@ -107,8 +107,8 @@ def render_table(
 
 
 def render_json(
-    results: List[ValidationResult],
-    output: Optional[TextIO] = None,
+    results: list[ValidationResult],
+    output: TextIO | None = None,
     pretty: bool = True,
 ) -> str:
     """Render validation results as JSON.
@@ -148,8 +148,8 @@ def render_json(
 
 
 def render_compact(
-    results: List[ValidationResult],
-    console: Optional[Console] = None,
+    results: list[ValidationResult],
+    console: Console | None = None,
 ) -> None:
     """Render results in compact one-line-per-key format.
 
@@ -169,7 +169,7 @@ def render_compact(
 
 def render_details(
     result: ValidationResult,
-    console: Optional[Console] = None,
+    console: Console | None = None,
 ) -> None:
     """Render detailed info for a single validation result.
 

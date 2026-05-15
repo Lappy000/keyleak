@@ -8,8 +8,7 @@ along with their likely service origin.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
-from typing import List, Optional, Tuple
+from dataclasses import dataclass
 
 
 @dataclass
@@ -20,8 +19,8 @@ class DetectedKey:
     service: str
     pattern_name: str
     confidence: float = 1.0
-    line_number: Optional[int] = None
-    source_file: Optional[str] = None
+    line_number: int | None = None
+    source_file: str | None = None
 
     def masked(self, visible: int = 6) -> str:
         """Return a masked version of the key for safe display."""
@@ -46,7 +45,7 @@ class KeyPattern:
     min_length: int = 10
     max_length: int = 500
 
-    def matches(self, text: str) -> List[str]:
+    def matches(self, text: str) -> list[str]:
         """Find all matches of this pattern in the given text."""
         results = []
         for match in self.pattern.finditer(text):
@@ -60,7 +59,7 @@ class KeyPattern:
 # Pattern registry
 # --------------------------------------------------------------------------- #
 
-_PATTERNS: List[KeyPattern] = [
+_PATTERNS: list[KeyPattern] = [
     KeyPattern(
         service="aws",
         pattern=re.compile(r"AKIA[0-9A-Z]{16}"),
@@ -180,7 +179,7 @@ class KeyDetector:
     patterns, the most specific (longest prefix) match wins.
     """
 
-    def __init__(self, services: Optional[List[str]] = None):
+    def __init__(self, services: list[str] | None = None):
         """Initialize detector with optional service filter.
 
         Args:
@@ -192,15 +191,15 @@ class KeyDetector:
             self._patterns = list(_PATTERNS)
 
     @property
-    def supported_services(self) -> List[str]:
+    def supported_services(self) -> list[str]:
         """Return list of supported service names."""
         return [p.service for p in self._patterns]
 
     def detect_in_text(
         self,
         text: str,
-        source_file: Optional[str] = None,
-    ) -> List[DetectedKey]:
+        source_file: str | None = None,
+    ) -> list[DetectedKey]:
         """Scan raw text for API keys.
 
         Args:
@@ -210,7 +209,7 @@ class KeyDetector:
         Returns:
             List of DetectedKey objects found in the text.
         """
-        results: List[DetectedKey] = []
+        results: list[DetectedKey] = []
         seen: set = set()
         lines = text.splitlines()
 
@@ -236,7 +235,7 @@ class KeyDetector:
 
         return results
 
-    def detect_in_file(self, filepath: str) -> List[DetectedKey]:
+    def detect_in_file(self, filepath: str) -> list[DetectedKey]:
         """Scan a file for API keys.
 
         Args:
@@ -249,11 +248,11 @@ class KeyDetector:
             FileNotFoundError: If the file does not exist.
             PermissionError: If the file cannot be read.
         """
-        with open(filepath, "r", encoding="utf-8", errors="replace") as fh:
+        with open(filepath, encoding="utf-8", errors="replace") as fh:
             content = fh.read()
         return self.detect_in_text(content, source_file=filepath)
 
-    def detect_single(self, key: str) -> Optional[DetectedKey]:
+    def detect_single(self, key: str) -> DetectedKey | None:
         """Classify a single key string.
 
         Args:
@@ -274,7 +273,7 @@ class KeyDetector:
                     )
         return None
 
-    def detect_batch(self, keys: List[str]) -> List[DetectedKey]:
+    def detect_batch(self, keys: list[str]) -> list[DetectedKey]:
         """Classify a batch of key strings.
 
         Args:
@@ -291,11 +290,11 @@ class KeyDetector:
         return results
 
 
-def get_all_patterns() -> List[KeyPattern]:
+def get_all_patterns() -> list[KeyPattern]:
     """Return a copy of all registered patterns."""
     return list(_PATTERNS)
 
 
-def get_supported_services() -> List[str]:
+def get_supported_services() -> list[str]:
     """Return list of all supported service names."""
     return [p.service for p in _PATTERNS]

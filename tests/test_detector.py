@@ -2,7 +2,13 @@
 
 import pytest
 
-from keyleak.detector import DetectedKey, KeyDetector, KeyPattern, get_all_patterns, get_supported_services
+from keyleak.detector import (
+    DetectedKey,
+    KeyDetector,
+    KeyPattern,
+    get_all_patterns,
+    get_supported_services,
+)
 
 
 class TestKeyDetectorInit:

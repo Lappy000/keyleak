@@ -5,7 +5,6 @@ from __future__ import annotations
 import importlib
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
 
 
 class KeyStatus(Enum):
@@ -26,10 +25,10 @@ class ValidationResult:
     service: str
     status: KeyStatus
     message: str = ""
-    account_info: Optional[str] = None
-    permissions: Optional[str] = None
-    http_status: Optional[int] = None
-    response_time_ms: Optional[float] = None
+    account_info: str | None = None
+    permissions: str | None = None
+    http_status: int | None = None
+    response_time_ms: float | None = None
 
     @property
     def is_active(self) -> bool:

@@ -8,12 +8,11 @@ that works with any valid credentials regardless of IAM permissions.
 from __future__ import annotations
 
 import time
-from typing import Optional
 
 from keyleak.validators import KeyStatus, ValidationResult
 
 
-def validate(key: str, secret_key: Optional[str] = None) -> ValidationResult:
+def validate(key: str, secret_key: str | None = None) -> ValidationResult:
     """Validate an AWS Access Key ID.
 
     Note: Full validation requires both the Access Key ID and Secret Access Key.
@@ -53,7 +52,7 @@ def validate(key: str, secret_key: Optional[str] = None) -> ValidationResult:
     # Full validation with boto3
     try:
         import boto3
-        from botocore.exceptions import ClientError, NoCredentialsError
+        from botocore.exceptions import ClientError
 
         client = boto3.client(
             "sts",

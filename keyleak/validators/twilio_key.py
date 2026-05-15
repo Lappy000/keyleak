@@ -8,7 +8,6 @@ If only the SID is available, we validate format only.
 from __future__ import annotations
 
 import time
-from typing import Optional
 
 import httpx
 
@@ -19,7 +18,7 @@ ACCOUNTS_ENDPOINT = f"{TWILIO_API_BASE}/2010-04-01/Accounts.json"
 REQUEST_TIMEOUT = 15.0
 
 
-def validate(key: str, secret: Optional[str] = None) -> ValidationResult:
+def validate(key: str, secret: str | None = None) -> ValidationResult:
     """Validate a Twilio API key.
 
     Full validation requires both the API Key SID (SK...) and Secret.

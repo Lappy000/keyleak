@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
-from typing import List, Optional
 
 import click
 from rich.console import Console
@@ -32,9 +31,9 @@ def _read_stdin() -> str:
 
 
 def _validate_detected_keys(
-    detected_keys: List[DetectedKey],
+    detected_keys: list[DetectedKey],
     verbose: bool = False,
-) -> List[ValidationResult]:
+) -> list[ValidationResult]:
     """Validate a list of detected keys and return results.
 
     Args:
@@ -44,7 +43,7 @@ def _validate_detected_keys(
     Returns:
         List of ValidationResult objects.
     """
-    results: List[ValidationResult] = []
+    results: list[ValidationResult] = []
 
     for idx, dk in enumerate(detected_keys, start=1):
         if verbose:
@@ -130,7 +129,7 @@ def scan(ctx: click.Context, files: tuple) -> None:
     verbose = ctx.obj["verbose"]
     services = ctx.obj["services"]
 
-    all_detected: List[DetectedKey] = []
+    all_detected: list[DetectedKey] = []
     detector = KeyDetector(services=services)
 
     for filepath in files:
@@ -165,7 +164,7 @@ def scan(ctx: click.Context, files: tuple) -> None:
 @click.argument("key")
 @click.option("--service", "-s", help="Force a specific service type.")
 @click.pass_context
-def check(ctx: click.Context, key: str, service: Optional[str]) -> None:
+def check(ctx: click.Context, key: str, service: str | None) -> None:
     """Validate a single API key directly.
 
     \b
@@ -291,7 +290,7 @@ def _process_text(
     use_json: bool,
     compact: bool,
     verbose: bool,
-    services: Optional[List[str]],
+    services: list[str] | None,
 ) -> None:
     """Process text input (from stdin pipe) for keys."""
     detector = KeyDetector(services=services)
@@ -312,7 +311,7 @@ def _process_text(
 
 
 def _output_results(
-    results: List[ValidationResult],
+    results: list[ValidationResult],
     use_json: bool = False,
     compact: bool = False,
     detail: bool = False,
